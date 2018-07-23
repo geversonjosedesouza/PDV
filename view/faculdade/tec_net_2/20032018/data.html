@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="exercicio.js"></script>
+        <title>Exercicios finais de JS</title>
+</head>
+<body>
+    <fieldset>
+        <legend>Digite a data a ser formatada</legend>
+        <label>Data</label>
+        <input id="data" maxlength="10" type="text" placeholder="Digite somente numeros" onkeydown="formatar(this)" required>
+        <button onclick="formatarData()">Data Por Extenso</button><button onclick="limpar()">limpar</button>
+    </fieldset>
+    <p id="resultado"></p>
+</body>
+</html>
