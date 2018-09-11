@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Meu Novo PDV</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <input type="text" id="prod" placeholder="informe o nome do produto" />
+        <input type="number" id="qtde" placeholder="informe a quantidade do produto" />
+        <button onclick="addItem()">incluir novo produto</button>
+        <button onclick="removeItem()">remover ultimo produto</button>
+        <fieldset>
+            <legend>Meus produtos</legend>
+            <ul>
+            </ul>
+        </fieldset>
+
+
+        <script>
+            const ul = document.getElementsByTagName('ul')[0];
+            let id = 0;
+
+            const addItem = () => {
+                let prod = document.getElementById('prod');
+                let qtde = document.getElementById('qtde');
+                let li = document.createElement('li');
+                li.innerHTML = '<a href="#" onclick="removeItemById(' + id + ')" >' + prod.value + ' - qtde: ' + qtde.value + '</a>';
+                li.setAttribute('id', id);
+                ul.appendChild(li);
+                prod.value = '';
+                qtde.value = '';
+                id++;
+            }
+
+            const removeItem = () => {
+                let li = document.getElementsByTagName('li');
+                ul.removeChild(li[li.length - 1]);
+                id--;
+            }
+
+            const removeItemById = (id) => {
+                if (confirm('Deseja realmente excluir? Cuidado!!!!')) {
+                    let li = document.getElementById(id);
+                    ul.removeChild(li);
+                    id--;
+                }
+            }
+
+        </script>
+    </body>
+
+</html>

@@ -44,4 +44,25 @@
         <li><a href="<?php echo server_url('view/faculdade/tec_net_2/22032018/fixacao.html'); ?>">Exercicio de Fixação</a></li>
 
     </ol>
+    <h3>Aula dia 13/08/2018</h3>
+    <ol>
+        <li><a href="<?php echo server_url('view/faculdade/tec_net_2/13082018/aula.html'); ?>">Aula</a></li>
+
+    </ol>
+    <h3>Aula dia 20/08/2018</h3>
+    <ol>
+        <li><a href="<?php echo server_url('view/faculdade/tec_net_2/20082018/index.html'); ?>">Aula</a></li>
+
+    </ol>
+    <h3>Aula dia 29/08/2018</h3>
+    <ol>
+        <li><a href="<?php echo server_url('view/faculdade/tec_net_2/29082018/index.html'); ?>">Desafio</a></li>
+        <li><a href="<?php echo server_url('view/faculdade/tec_net_2/29082018/jogo.html'); ?>">Jogo</a></li>
+
+    </ol>
+    <h3>Aula dia 03/09/2018 DOM</h3>
+    <ol>
+        <li><a href="<?php echo server_url('view/faculdade/tec_net_2/03092018/index.html'); ?>">Desafio</a></li>
+
+    </ol>
 </div>

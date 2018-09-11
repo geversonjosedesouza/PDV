@@ -1,0 +1,34 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>Aula</title>
+</head>
+<body>
+<script>
+var idade = prompt("Informe sua idade!");
+document.write('<hr>');
+document.write('IF/ELSE embutido( ? :)</br>');
+var status = (idade >= 18) ? "adulto" : "menor de idade";
+document.write(idade+' é '+status+'</br>');
+document.write('<hr>');
+
+document.write('WHILE</br>');
+var x = 1;
+document.write('iniciou</br>');
+while(x<10){
+    document.write('numero_'+x+'</br>');
+    x++;
+}
+document.write('terminou</br>');
+document.write('<hr>');
+document.write('ARROU FUNCTION</br>');
+var imc = (massa, altura) => {
+  return parseFloat(massa) / parseFloat(Math.pow(altura, 2));
+}
+var kg = prompt("Informe sua massa!");
+var altura = prompt("Informe sua altura!");
+ document.write(`Seu IMC é: ${imc(kg, altura)}</br>`);
+</script>
+
+</body>
+</html> 

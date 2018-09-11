@@ -26,7 +26,7 @@ function listProdutos() {
 }
 
 function add() {
-    var qtdItens = 0;
+    var qtdItens
     var qtdTotalItens = 0;
     var tbody = document.getElementById('dados');
     var tr = document.createElement('tr');
