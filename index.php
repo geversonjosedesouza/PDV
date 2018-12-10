@@ -8,6 +8,7 @@ and open the template in the editor.
 include_once './conf.php';
 include_once './controller/ControllerValidation.php';
 include_once './controller/ControllerContato.php';
+ini_set('display_errors', 1);
 
 session_start();
 if (isset($_SESSION['usuario'])) {
@@ -39,17 +40,8 @@ function pagina_conteudo() {
             include_once server_path("view/principal/principal.php");
         } else {
             include_once server_path("view/principal/panel_control.php");
-            //ControllerContato::lista();
         }
     }
-}
-
-function faculdade_left() {
-    include_once server_path("view/faculdade/left.php");
-}
-
-function faculdade_center() {
-    include_once server_path("view/faculdade/center.php");
 }
 
 include_once 'view/page.php';

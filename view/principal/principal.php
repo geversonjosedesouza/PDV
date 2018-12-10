@@ -16,19 +16,19 @@
             </ol>
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="img/slideJava.png" alt="Java" style="width:100%;">
-                    <h4>Multiplataforma</h4>
-                    <p>A capacidade de um aplicativo rodar em muitos sistemas operacionais, como Linux, Windows , Android, entre outros.</p>
+                    <img src="img/dlt.png" alt="DLT" style="width:100%;">
+                    <h4>DLT</h4>
+                    <p>Uma das melhores marcas de roupas maculina.</p>
                 </div>
                 <div class="item">
-                    <img src="img/slideLinux.png" alt="Distribuiçoes Linux" style="width:100%;">
-                    <h4>Segurança, Estabilidade, Baixo Custo</h4>
-                    <p>Além de ser gratuito, a segurança que ele proporciona é maior comparado ao sistema Windows.</p>
+                    <img src="img/fillsete.jpg" alt="Fill Sete" style="width:100%;">
+                    <h4>Fill Sete</h4>
+                    <p>Um destaque na moda feminina.</p>
                 </div>
                 <div class="item">
-                    <img src="img/slidePostgres.png" alt="PostgreSQL" style="width:100%;">
-                    <h4>Robusto e 100% Open Source</h4>
-                    <p>O PostgreSQL é um sistema gerenciador de banco de dados (SGBD) que tem a função de prover meios eficientes e confiáveis para criar e manter um banco de dados.</p>
+                    <img src="img/mr2.jpg" alt="MR2" style="width:100%;">
+                    <h4>MR2</h4>
+                    <p>Uma das melhores marcas de roupas maculina.</p>
                 </div>
             </div>
             <a class="left carousel-control" href="#myCarousel" data-slide="prev">

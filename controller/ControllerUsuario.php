@@ -5,9 +5,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+ini_set('display_errors', 1);
 include_once server_path("model/ModelUsuario.php");
 include_once server_path("dao/DAOUsuario.php");
-ini_set('display_errors', 1);
 
 class ControllerUsuario {
 
@@ -15,15 +15,14 @@ class ControllerUsuario {
         include_once server_path('view/usuario/login.php');
     }
 
-    public static function entrar($user = false, $pass = false) {
-        //receber os dados
-        $user = ($user != false) ? $user : $_POST['user'];
-        $pass = ($pass != false) ? $pass : $_POST['pass'];
-
+    public static function entrar($usua_nome = false, $usua_senha = false) {
+        $usua_nome = ($usua_nome != false) ? $usua_nome : $_POST['usua_nome'];
+        $usua_senha = ($usua_senha != false) ? $usua_senha : $_POST['usua_senha'];
         try {
-            //buscar no banco
-            $us = DAOUsuario::getElementName($user);
-            // testando ControllerUsuario::teste1($user, $us->pass);
+            $us = DAOUsuario::getElementName($usua_nome);
+            if ($us == false) {
+                echo '<script type="text/javascript">alert("Se este é seu primeiro acesso, o usuário é root@root, e a senha é admin");</script>';   
+            }
         } catch (Exception $erro) {
             redirect(server_url("?erro=" . $erro->getMessage()));
             return false;
@@ -35,15 +34,14 @@ class ControllerUsuario {
             return false;
         }
         //USAR QUANDO A SENHA FOR ENCRIPTOGRAFADA
-//        if (!password_verify($pass, $us->pass)) {
+//        if (!usua_senhaword_verify($usua_senha, $us->usua_senha)) {
 //            $caminho = server_url("?erro=Senha Incorreta");
 //            redirect($caminho);
 //            return false;
 //        }
-        //criar uma sessao com os dados do usuario
         $_SESSION['usuario'] = $us;
 
-        $caminho = server_url("?sucesso=Bem vindo $us->user");
+        $caminho = server_url("?sucesso=Bem vindo $us->usua_nome");
         redirect($caminho);
     }
 
@@ -66,12 +64,11 @@ class ControllerUsuario {
     public static function edita() {
         Validar::autorizar();
 
-        if (!isset($_GET['codigo'])) {
+        if (!isset($_GET['usua_pk_id'])) {
             redirect(server_url('?erro=Usuário não informado'));
         }
 
-        //buscando livro para ser editado
-        $usuario = DAOUsuario::getElementId($_GET['codigo']);
+        $usuario = DAOUsuario::getElementId($_GET['usua_pk_id']);
 
         if ($usuario == false) {
             redirect(server_url('?erro=Usuário não encontrado'));
@@ -82,11 +79,11 @@ class ControllerUsuario {
 
     public static function editaProfile() {
         Validar::autorizar();
-        $user = $_GET['user'];
-        if (!isset($user)) {
+        $usua_nome = $_GET['usua_nome'];
+        if (!isset($usua_nome)) {
             redirect(server_url('?erro=Usuário não informado'));
         }
-        $usuario = DAOUsuario::getElementName($user);
+        $usuario = DAOUsuario::getElementName($usua_nome);
         if ($usuario == false) {
             redirect(server_url('?erro=Usuário não encontrado'));
         }
@@ -95,24 +92,22 @@ class ControllerUsuario {
 
     public static function atualizar() {
         validar::autorizar();
-        $codigo = strip_tags($_POST['codigo']);
-        $user = strip_tags($_POST['user']);
-        $pass = strip_tags($_POST['pass']);
-        $status = strip_tags($_POST['status']);
-//        ControllerUsuario::teste1($status, '');
-//        if ($status != 'on') {
-//            $status = 'INATIVO';
-//        } else {
-//            $status = 'ATIVO';
-//        }
+        $usua_pk_id = strip_tags($_POST['usua_pk_id']);
+        $usua_nome = strip_tags($_POST['usua_nome']);
+        $usua_senha = strip_tags($_POST['usua_senha']);
+        $usua_status = strip_tags($_POST['usua_status']);
+        $usua_tipo = strip_tags($_POST['usua_tipo']);
         try {
-            if (!isset($codigo)) {
+            if (!isset($usua_pk_id)) {
                 redirect(server_url('?erro=Usuário não informado'));
             }
-            $usuario = new model\us\ModelUsuario($user, $pass);
-            $usuario->status = $status;
+            $usuario = new model\usuario\ModelUsuario($usua_nome, $usua_senha);
+            $usuario->usua_nome = $usua_nome;
+            $usuario->usua_senha = $usua_senha;
+            $usuario->usua_status = $usua_status;
+            $usuario->usua_tipo = $usua_tipo;
 
-            DAOUsuario::update($usuario, $codigo);
+            DAOUsuario::update($usuario, $usua_pk_id);
         } catch (Exception $erro) {
             redirect(server_url("?erro=" . $erro->getMessage()));
         }
@@ -124,12 +119,16 @@ class ControllerUsuario {
     }
 
     public static function salvar() {
-        $username = strip_tags($_POST['username']);
-        $password = strip_tags($_POST['password']);
-        $status = strip_tags($_POST['status']);
         try {
-            $usuario = new model\us\ModelUsuario($username, $password);
-            $usuario->status = $status;
+            $usua_nome = strip_tags($_POST['usua_nome']);
+            $usua_senha = strip_tags($_POST['usua_senha']);
+            $usua_status = strip_tags($_POST['usua_status']);
+            $usua_tipo = strip_tags($_POST['usua_tipo']);
+            $usuario = new model\usuario\ModelUsuario($usua_nome, $usua_senha);
+            $usuario->usua_nome = $usua_nome;
+            $usuario->usua_senha = $usua_senha;
+            $usuario->usua_status = $usua_status;
+            $usuario->usua_tipo = $usua_tipo;
             DAOUsuario::save($usuario);
         } catch (Exception $erro) {
             redirect(server_url("?erro=" . $erro->getMessage()));
@@ -139,34 +138,16 @@ class ControllerUsuario {
 
     public static function excluir() {
         validar::autorizar();
-        if (!isset($_GET['codigo'])) {
+        $usua_pk_id = strip_tags($_GET['usua_pk_id']);
+        if (!isset($usua_pk_id)) {
             redirect(server_url('?erro=Usuário Não Informado'));
         }
         try {
-            DAOUsuario::delete($_GET['codigo']);
+            DAOUsuario::delete($usua_pk_id);
         } catch (Exception $erro) {
             redirect(server_url('?erro=' . $erro->getMessage()));
         }
-        redirect(server_url('?sucesso=Usuário Excluido'));
-    }
-
-    public static function teste(model\us\ModelUsuario $use) {
-
-        echo $use->codigo . '<br>';
-        echo $use->user . '<br>';
-        echo $use->pass . '<br>';
-        echo $use->status . '<br>';
-        echo '<script>';
-        echo "alert( 'ops!');";
-        echo '</script>';
-    }
-
-    public static function teste1($use, $pas) {
-        echo '<script>';
-        echo "alert( 'ops!');";
-        echo '</script>';
-        echo $use . '<br>';
-        echo $pas . '<br>';
+        ControllerUsuario::lista();
     }
 
 }

@@ -15,8 +15,8 @@
         </div><!--heading -->
         <div class="panel-body">
             <form action="<?php echo server_url('?page=ControllerUsuario&option=entrar'); ?>" method="POST">
-                <input type="email" placeholder="Email" class="form-control input-lg" name="user" required><br>
-                <input type="password" placeholder="Senha" class="form-control input-lg" name="pass" required><br>
+                <input type="email" placeholder="Email" class="form-control input-lg" name="usua_nome" required><br>
+                <input type="password" placeholder="Senha" class="form-control input-lg" name="usua_senha" required><br>
                 <button class="btn btn-lg btn-block btn-primary">
                     <span class="glyphicon glyphicon-ok-sign"></span>Entrar</button>
             </form>

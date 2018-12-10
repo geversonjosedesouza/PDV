@@ -16,7 +16,7 @@
 
     <?php
     ini_set('display_errors', 1);
-    if ($contato == false) {
+    if ($contatos == false) {
         echo '<h2>Não Existem Contatos salvos!</h2>';
     } else {
 
@@ -30,19 +30,19 @@
         echo '<th>Opções</th>';
         echo '</tr>';
 
-        foreach ($contato as $cada_contato) {
+        foreach ($contatos as $cada_contato) {
             echo '<tr>';
-            echo '<td>', $cada_contato->codigo, '</td>';
-            echo '<td>', $cada_contato->nome, '</td>';
-            echo '<td>', $cada_contato->email, '</td>';
-            echo '<td>', $cada_contato->telefone, '</td>';
-            echo '<td>', $cada_contato->descricao, '</td>';
+            echo '<td>', $cada_contato->cont_pk_id, '</td>';
+            echo '<td>', $cada_contato->cont_nome, '</td>';
+            echo '<td>', $cada_contato->cont_email, '</td>';
+            echo '<td>', $cada_contato->cont_telefone, '</td>';
+            echo '<td>', $cada_contato->cont_descricao, '</td>';
             echo '<td>';
-            echo '<a href="', server_url('?page=ControllerContato&option=edita&codigo=' . $cada_contato->codigo), '" class="btn btn-warning">';
+            echo '<a href="', server_url('?page=ControllerContato&option=edita&cont_pk_id=' . $cada_contato->cont_pk_id), '" class="btn btn-warning">';
             echo '<span class="glyphicon glyphicon-edit"></span>';
             echo '</a>';
 
-            echo ' <a href="', server_url('?page=ControllerContato&option=excluir&codigo=' . $cada_contato->codigo), '" class="btn btn-danger">';
+            echo ' <a href="', server_url('?page=ControllerContato&option=excluir&cont_pk_id=' . $cada_contato->cont_pk_id), '" class="btn btn-danger">';
             echo '<span class="glyphicon glyphicon-trash"></span>';
             echo '</a>';
             echo '</td>';

@@ -16,7 +16,7 @@
 
     <?php
     ini_set('display_errors', 1);
-    if ($contato == false) {
+    if ($contatos == false) {
         echo '<h2>Não Existem Contatos salvos!</h2>';
     } else {
 

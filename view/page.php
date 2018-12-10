@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <title>Geverson Souza</title>
+        <title>PDV</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="template/bootstrap-3.3.7/dist/css/bootstrap.css">
         <link rel="stylesheet" href="template/bootstrap-3.3.7/dist/css/bootstrap-theme.min.css">

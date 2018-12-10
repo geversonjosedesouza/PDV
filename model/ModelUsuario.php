@@ -6,15 +6,15 @@
  * and open the template in the editor.
  */
 
-namespace model\us;
+namespace model\usuario;
 
 class ModelUsuario {
 
     private $dados = [];
 
-    public function __construct($user, $pass) {
-        $this->dados['user'] = $user;
-        $this->dados['pass'] = $pass;
+    public function __construct($usua_nome, $usua_senha) {
+        $this->dados['$usua_nome'] = $usua_nome;
+        $this->dados['$usua_senha'] = $usua_senha;
     }
 
     public function __set($indice, $valor) {

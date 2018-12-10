@@ -11,23 +11,22 @@ ini_set('display_errors', 1);
 
 class DAOUsuario extends DAOConexao {
 
-    public static function getElementName($user = "") {
-        $query = "SELECT * FROM geverson.usuario";
-        $query .= " WHERE user=:user LIMIT 1;";
+    public static function getElementName($usua_nome = "") {
+        $query = "SELECT * FROM myboutique.usuario";
+        $query .= " WHERE usua_nome=:usua_nome LIMIT 1;";
         try {
-            //abrir a conexao
             $conexao = DAOConexao::getInstance();
         } catch (Exception $erro) {
             throw new Exception($erro->getMessage());
         }
         $busca = $conexao->prepare($query);
-        $busca->bindParam(':user', $user, PDO::PARAM_STR);
+        $busca->bindParam(':usua_nome', $usua_nome, PDO::PARAM_STR);
         $busca->execute();
         return $busca->fetch(PDO::FETCH_OBJ);
     }
 
     public static function select() {
-        $query = "SELECT * FROM geverson.usuario";
+        $query = "SELECT * FROM myboutique.usuario";
         try {
             $conexao = DAOConexao::getInstance();
         } catch (Exception $erro) {
@@ -38,39 +37,30 @@ class DAOUsuario extends DAOConexao {
         return $busca->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public static function getElementId($codigo = "") {
-        $query = "SELECT * FROM geverson.usuario WHERE codigo=:codigo;";
-
+    public static function getElementId($usua_pk_id = "") {
+        $query = "SELECT * FROM myboutique.usuario WHERE usua_pk_id=:usua_pk_id;";
         try {
-            //abrir a conexao
             $conexao = DAOConexao::getInstance();
         } catch (Exception $erro) {
             throw new Exception($erro->getMessage());
         }
-
-        //preparando busca
         $busca = $conexao->prepare($query);
-
-        //substituindo valores
-        $busca->bindParam(":codigo", $codigo, PDO::PARAM_STR);
-
-        //executando envio
+        $busca->bindParam(":usua_pk_id", $usua_pk_id, PDO::PARAM_STR);
         $busca->execute();
-
-        //retornando objeto livro
         return $busca->fetch(PDO::FETCH_OBJ);
     }
 
-    public static function update(model\us\ModelUsuario $usuario = null, $codigo = "") {
+    public static function update(model\usuario\ModelUsuario $usuario = null, $usua_pk_id = "") {
         if (!is_object($usuario)) {
             throw new Exception("Dados incompletos");
         }
 
-        $query = "UPDATE geverson.usuario SET ";
-        $query .= "user=:user, ";
-        $query .= "pass=:pass, ";
-        $query .= "status=:status ";
-        $query .= " WHERE codigo=:codigo;";
+        $query = "UPDATE myboutique.usuario SET ";
+        $query .= "usua_nome=:usua_nome, ";
+        $query .= "usua_senha=:usua_senha, ";
+        $query .= "usua_status=:usua_status, ";
+        $query .= "usua_tipo=:usua_tipo ";
+        $query .= " WHERE usua_pk_id=:usua_pk_id;";
         try {
             $conexao = DAOConexao::getInstance();
         } catch (Exception $erro) {
@@ -78,59 +68,50 @@ class DAOUsuario extends DAOConexao {
         }
         $envio = $conexao->prepare($query);
 
-        $envio->bindParam(':user', $usuario->user, PDO::PARAM_STR);
-        $envio->bindParam(':pass', $usuario->pass, PDO::PARAM_STR);
-        $envio->bindParam(':status', $usuario->status, PDO::PARAM_STR);
-        $envio->bindParam(':codigo', $codigo, PDO::PARAM_STR);
+        $envio->bindParam(':usua_nome', $usuario->usua_nome, PDO::PARAM_STR);
+        $envio->bindParam(':usua_senha', $usuario->usua_senha, PDO::PARAM_STR);
+        $envio->bindParam(':usua_status', $usuario->usua_status, PDO::PARAM_STR);
+        $envio->bindParam(':usua_tipo', $usuario->usua_tipo, PDO::PARAM_STR);
+        $envio->bindParam(':usua_pk_id', $usua_pk_id, PDO::PARAM_STR);
         $envio->execute();
 
         return true;
     }
 
-    public static function delete($codigo = "") {
-        $query = "DELETE FROM geverson.usuario WHERE codigo=:codigo;";
+    public static function delete($usua_pk_id = "") {
+        $query = "DELETE FROM myboutique.usuario WHERE usua_pk_id=:usua_pk_id;";
         try {
             $conexao = DAOConexao::getInstance();
         } catch (Exception $erro) {
             throw new Exception($erro->getMessage());
         }
         $excluir = $conexao->prepare($query);
-        $excluir->bindParam(":codigo", $codigo, PDO::PARAM_STR);
+        $excluir->bindParam(":usua_pk_id", $usua_pk_id, PDO::PARAM_STR);
         $excluir->execute();
 
         return true;
     }
 
-    public static function save(model\us\ModelUsuario $usuario = null) {
+    public static function save(model\usuario\ModelUsuario $usuario = null) {
         if (!is_object($usuario)) {
             throw new Exception("Dados incompletos");
         }
-        $query = "INSERT INTO geverson.usuario ";
-        $query .= "(user, pass, status) ";
+        $query = "INSERT INTO myboutique.usuario ";
+        $query .= "(usua_nome, usua_senha, usua_status, usua_tipo) ";
         $query .= "VALUES ";
-        $query .= "(:user, :pass, :status);";
+        $query .= "(:usua_nome, :usua_senha, :usua_status, :usua_tipo);";
         try {
             $conexao = DAOConexao::getInstance();
         } catch (Exception $erro) {
             throw new Exception($erro->getMessage());
         }
         $envio = $conexao->prepare($query);
-        $envio->bindParam(':user', $usuario->user, PDO::PARAM_STR);
-        $envio->bindParam(':pass', $usuario->pass, PDO::PARAM_STR);
-        $envio->bindParam(':status', $usuario->status, PDO::PARAM_STR);
+        $envio->bindParam(':usua_nome', $usuario->usua_nome, PDO::PARAM_STR);
+        $envio->bindParam(':usua_senha', $usuario->usua_senha, PDO::PARAM_STR);
+        $envio->bindParam(':usua_status', $usuario->usua_status, PDO::PARAM_STR);
+        $envio->bindParam(':usua_tipo', $usuario->usua_tipo, PDO::PARAM_STR);
         $envio->execute();
         return true;
-    }
-
-    public static function teste(model\us\ModelUsuario $use) {
-
-        echo $use->codigo . '<br>';
-        echo $use->user . '<br>';
-        echo $use->pass . '<br>';
-        echo $use->status . '<br>';
-        echo '<script>';
-        echo "alert( 'ops!');";
-        echo '</script>';
     }
 
 }

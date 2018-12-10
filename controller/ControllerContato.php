@@ -21,14 +21,14 @@ class ControllerContato {
 
     public static function salvar() {
         try {
-            $nome = strip_tags($_POST['nome']);
-            $email = strip_tags($_POST['email']);
-            $telefone = strip_tags($_POST['telefone']);
-            $descricao = strip_tags($_POST['descricao']);
+            $cont_nome = strip_tags($_POST['cont_nome']);
+            $cont_email = strip_tags($_POST['cont_email']);
+            $cont_telefone = strip_tags($_POST['cont_telefone']);
+            $cont_descricao = strip_tags($_POST['cont_descricao']);
 
-            $contato = new model\co\ModelContato($nome, $email);
-            $contato->telefone = $telefone;
-            $contato->descricao = $descricao;
+            $contato = new model\contato\ModelContato($cont_nome, $cont_email);
+            $contato->cont_telefone = $cont_telefone;
+            $contato->cont_descricao = $cont_descricao;
             DAOContato::salvar($contato);
         } catch (Exception $erro) {
             redirect(server_url("?erro=" . $erro->getMessage()));
@@ -39,7 +39,7 @@ class ControllerContato {
     public static function lista() {
         validar::autorizar();
         try {
-            $contato = DAOContato::listar();
+            $contatos = DAOContato::listar();
         } catch (Exception $erro) {
             redirect(server_url("?erro=" . $erro->getMessage()));
         }
@@ -48,10 +48,10 @@ class ControllerContato {
 
     public static function edita() {
         validar::autorizar();
-        if (!isset($_GET['codigo'])) {
+        if (!isset($_GET['cont_pk_id'])) {
             redirect(server_url('?erro=Contato não informado'));
         }
-        $contato = DAOContato::buscarPorId($_GET['codigo']);
+        $contato = DAOContato::buscarPorId($_GET['cont_pk_id']);
         if ($contato == false) {
             redirect(server_url('?erro=Contato não encontrado'));
         }
@@ -60,37 +60,36 @@ class ControllerContato {
 
     public static function atualizar() {
         validar::autorizar();
-        $codigo = strip_tags($_POST['codigo']);
-        $nome = strip_tags($_POST['nome']);
-        $email = strip_tags($_POST['email']);
-        $telefone = strip_tags($_POST['telefone']);
-        $descricao = strip_tags($_POST['descricao']);
-        if (!isset($codigo)) {
-            redirect(base_url('?erro=Contato não informado'));
+        $cont_pk_id = strip_tags($_POST['cont_pk_id']);
+        $cont_nome = strip_tags($_POST['cont_nome']);
+        $cont_email = strip_tags($_POST['cont_email']);
+        $cont_telefone = strip_tags($_POST['cont_telefone']);
+        $cont_descricao = strip_tags($_POST['cont_descricao']);
+        if (!isset($cont_pk_id)) {
+            redirect(server_url('?erro=Contato não informado'));
         }
-        $contato = new model\co\ModelContato($nome, $email);
-        $contato->codigo = $codigo;
-        $contato->telefone = $telefone;
-        $contato->descricao = $descricao;
+        $contato = new model\contato\ModelContato($cont_nome, $cont_email);
+        $contato->cont_codigo = $cont_pk_id;
+        $contato->cont_telefone = $cont_telefone;
+        $contato->cont_descricao = $cont_descricao;
         try {
-            DAOContato::update($contato, $_POST['codigo']);
+            DAOContato::update($contato, $_POST['cont_pk_id']);
         } catch (Exception $erro) {
-            redirect(base_url("?erro=" . $erro->getMessage()));
+            redirect(server_url("?erro=" . $erro->getMessage()));
         }
         ControllerContato::lista();
     }
 
     public static function excluir() {
         validar::autorizar();
-        if (!isset($_GET['codigo'])) {
+        if (!isset($_GET['cont_pk_id'])) {
             redirect(base_url('?erro=Contato Não Informado'));
         }
         try {
-            DAOContato::delete($_GET['codigo']);
+            DAOContato::delete($_GET['cont_pk_id']);
         } catch (Exception $erro) {
             redirect(server_url('?erro=' . $erro->getMessage()));
         }
-        //redirect(server_url('?sucesso=Contato Excluido'));
         ControllerContato::lista();
     }
 

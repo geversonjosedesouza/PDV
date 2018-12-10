@@ -9,18 +9,18 @@
     <legend>Entre em contato</legend>
     <form action="?page=ControllerContato&option=salvar" method="post">
         <label>Nome: </label>
-        <input type="text" name="nome" placeholder="Digite seu nome" class="form-control" required>
+        <input type="text" name="cont_nome" placeholder="Digite seu nome" class="form-control" required>
         <br>
 
         <label>Email: </label>
-        <input type="email" name="email" placeholder="Digite seu email" class="form-control" required>
+        <input type="email" name="cont_email" placeholder="Digite seu email" class="form-control" required>
         <br>
 
         <label>Telefone: </label>
-        <input type="number" name="telefone"  placeholder="Digite seu telefone" class="form-control" required>
+        <input type="number" name="cont_telefone"  placeholder="Digite seu telefone" class="form-control" required>
         <br>
         <label>Descrição:</label>
-        <textarea rows="3" cols="5" name="descricao" placeholder="Digite uma descrição" class="form-control" required></textarea><br>
+        <textarea rows="3" cols="5" name="cont_descricao" placeholder="Digite uma descrição" class="form-control" required></textarea><br>
         <button class="btn btn-primary btn-lg btn-block">
             <span class="glyphicon glyphicon-ok-sign">Enviar</span>
         </button>

@@ -25,15 +25,4 @@ class validar {
         }
     }
 
-    public static function validar_exercicio() {
-        if (!isset($_GET['page']) || !isset($_GET['option'])) {
-            return false;
-        }
-        $classe = ucfirst($_GET['page']);
-        $metodo = $_GET['option'];
-        include_once server_path("controller/$classe.php");
-        $classe::$metodo();
-        return true;
-    }
-
 }

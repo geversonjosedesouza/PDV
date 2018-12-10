@@ -33,11 +33,39 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo server_url('?page=ControllerTeste&option=lista'); ?>">
-                    <span class="glyphicon glyphicon-adjust"></span>
-                    Área de Teste
+                <a href="<?php echo server_url('?page=ControllerCliente&option=lista'); ?>">
+                    <span class="glyphicon glyphicon-user"></span>
+                    Clientes
                 </a>
             </li>
+            <li>
+                <a href="<?php echo server_url('?page=ControllerProduto&option=lista'); ?>">
+                    <span class="glyphicon glyphicon-list-alt"></span>
+                    Podutos
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo server_url('?page=ControllerPedido&option=lista'); ?>">
+                    <span class="glyphicon glyphicon-credit-card"></span>
+                    Pedidos
+                </a>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Área de Testes</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="<?php echo server_url('?page=ControllerTeste&option=lista'); ?>">
+                            <span class="glyphicon glyphicon-adjust"></span>
+                            Demais testes
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo server_url("?page=ControllerTeste&option=pedidoLista"); ?>">
+                            <span class="glyphicon glyphicon-credit-card"></span>Pedidos</a>
+                    </li>
+                </ul>
+            </li>
+
         </ul>
     </div> 
 </div> 
