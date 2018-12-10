@@ -5,10 +5,10 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
+ini_set('display_errors', 1);
 include_once './conf.php';
 include_once './controller/ControllerValidation.php';
 include_once './controller/ControllerContato.php';
-ini_set('display_errors', 1);
 
 session_start();
 if (isset($_SESSION['usuario'])) {
