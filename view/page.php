@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="template/bootstrap-3.3.7/dist/css/bootstrap.min.css">
         <script src="template/jquery-3.3.1.min.js"></script>
         <script src="template/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+        <!--<script src="../template/jquery.mask.min.js"></script>-->
     </head>
     <body class="container">
         <header class="row">

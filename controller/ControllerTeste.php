@@ -7,6 +7,7 @@
  */
 include_once server_path('dao/DAOConexao.php');
 include_once server_path('model/ModelContato.php');
+include_once server_path('model/ModelPedido.php');
 include_once server_path('dao/DAOContato.php');
 include_once server_path('dao/DAOPedido.php');
 include_once server_path('dao/DAOCliente.php');
@@ -30,6 +31,36 @@ class ControllerTeste {
         $clientes = DAOCliente::select();
         $produtos = DAOProduto::select();
         include_once server_path('view/teste/pedidoNovo.php');
+    }
+
+    public static function pedidoSalvar() {
+        validar::autorizar();
+
+        $pedi_fk_cliente = strip_tags($_POST['pedi_fk_cliente']);
+        $pedi_quantidade = strip_tags($_POST['pedi_quantidade']);
+        $pedi_total = strip_tags($_POST['pedi_total']);
+        $pedi_data = strip_tags($_POST['pedi_data']);
+        $pedi_status = "FECHADO";
+        try {
+            $pedido = new model\pedido\ModelPedido();
+            $pedido->pedi_fk_cliente = $pedi_fk_cliente;
+            $pedido->pedi_quantidade = $pedi_quantidade;
+            $pedido->pedi_total = $pedi_total;
+            $pedido->pedi_data = $pedi_data;
+            $pedido->pedi_status = $pedi_status;
+
+               echo 'Cliente: ' . $pedi_fk_cliente . '<br>';
+            echo 'Quantidade: ' . $pedi_quantidade . '<br>';
+            echo 'Total: ' . $pedi_total . '<br>';
+            echo 'Data: ' . $pedi_data . '<br>';
+            echo 'Status: ' . $pedi_status . '<br>';
+
+            //DAOPedido::save($pedido);
+            //$id = DAOPedido::retornaUltiID();
+        } catch (Exception $erro) {
+            redirect(server_url("?erro=" . $erro->getMessage()));
+        }
+        //ControllerPedido::lista();
     }
 
     public static function novo() {
@@ -129,34 +160,6 @@ class ControllerTeste {
         }
 
         include_once server_url('view/teste/edit.php');
-    }
-
-    public static function SALVARPEDIDO() {
-        try {
-            $pedido = new model\pedido\ModelPedido();
-            $pedido->pedi_fk_cliente = strip_tags($_POST['pedi_fk_cliente']);
-            $pedido->pedi_quantidade = strip_tags($_POST['pedi_quantidade']);
-            $pedido->pedi_total = strip_tags($_POST['pedi_total']);
-            $pedido->pedi_data = strip_tags($_POST['pedi_data']);
-            $pedido->pedi_status = "FECHADO";
-
-            echo 'Cliente' . $pedido->pedi_fk_cliente . '<br>';
-            echo 'Quantidade' . $pedido->pedi_fk_cliente . '<br>';
-
-            echo 'Valor' . $pedido->pedi_fk_cliente . '<br>';
-
-            echo 'Total' . $pedido->pedi_fk_cliente . '<br>';
-
-            echo 'Data' . $pedido->pedi_fk_cliente . '<br>';
-
-            echo 'Status' . $pedido->pedi_fk_cliente . '<br>';
-
-//            DAOPedido::save($pedido);
-//            $id = DAOPedido::retornaUltiID();
-        } catch (Exception $erro) {
-            redirect(server_url("?erro=" . $erro->getMessage()));
-        }
-//        ControllerPedido::lista();
     }
 
 }

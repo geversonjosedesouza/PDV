@@ -63,6 +63,20 @@ class DAOPedido extends DAOConexao {
         return $busca->fetch(PDO::FETCH_OBJ);
     }
 
+    public static function getPedido($pedi_pk_id = "") {
+        $query = "SELECT pedi_pk_id, clie_pk_id, clie_nome, pedi_quantidade, pedi_total, pedi_data, pedi_status";
+        $query .= " FROM myboutique.pedido INNER JOIN myboutique.cliente ON pedi_fk_cliente = clie_pk_id WHERE pedi_pk_id=:pedi_pk_id;";
+        try {
+            $conexao = DAOConexao::getInstance();
+        } catch (Exception $erro) {
+            throw new Exception($erro->getMessage());
+        }
+        $busca = $conexao->prepare($query);
+        $busca->bindParam(":pedi_pk_id", $pedi_pk_id, PDO::PARAM_STR);
+        $busca->execute();
+        return $busca->fetch(PDO::FETCH_OBJ);
+    }
+
     public static function update(model\pedido\ModelPedido $pedido = null, $pedi_pk_id = "") {
         if (!is_object($pedido)) {
             throw new Exception("Dados incompletos");
@@ -119,11 +133,11 @@ class DAOPedido extends DAOConexao {
             throw new Exception($erro->getMessage());
         }
         $envio = $conexao->prepare($query);
-        $envio->bindParam(':pedi_fk_cliente', $pedido->pedi_nome, PDO::PARAM_STR);
-        $envio->bindParam(':pedi_quantidade', $pedido->pedi_cpf, PDO::PARAM_STR);
-        $envio->bindParam(':pedi_total', $pedido->pedi_endereco, PDO::PARAM_STR);
-        $envio->bindParam(':pedi_data', $pedido->pedi_telefone, PDO::PARAM_STR);
-        $envio->bindParam(':pedi_status', $pedido->pedi_telefone, PDO::PARAM_STR);
+        $envio->bindParam(':pedi_fk_cliente', $pedido->pedi_fk_cliente, PDO::PARAM_STR);
+        $envio->bindParam(':pedi_quantidade', $pedido->pedi_quantidade, PDO::PARAM_STR);
+        $envio->bindParam(':pedi_total', $pedido->pedi_total, PDO::PARAM_STR);
+        $envio->bindParam(':pedi_data', $pedido->pedi_data, PDO::PARAM_STR);
+        $envio->bindParam(':pedi_status', $pedido->pedi_status, PDO::PARAM_STR);
         $envio->execute();
         return true;
     }

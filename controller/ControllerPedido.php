@@ -10,6 +10,7 @@ include_once server_path("model/ModelPedido.php");
 include_once server_path("dao/DAOPedido.php");
 include_once server_path("dao/DAOCliente.php");
 include_once server_path("dao/DAOProduto.php");
+include_once server_path("dao/DAOItem.php");
 
 class ControllerPedido {
 
@@ -41,17 +42,16 @@ class ControllerPedido {
 
     public static function visualizar() {
         Validar::autorizar();
-
-//        if (!isset($_GET['pedi_pk_id'])) {
-//            redirect(server_url('?erro=Pedido não informado'));
-//        }
-//
-//        $pedido = DAOPedido::getElementId($_GET['pedi_pk_id']);
-//
-//        if ($pedido == false) {
-//            redirect(server_url('?erro=Pedido não encontrado'));
-//        }
-
+        $numPedido = strip_tags($_GET['pedi_pk_id']);
+        if (!isset($numPedido)) {
+            redirect(server_url('?erro=Pedido não informado'));
+        }
+        $pedido = DAOPedido::getPedido($numPedido);
+        $itens = DAOItem::selectItens($numPedido);
+        $produtos = DAOProduto::select();
+        if ($pedido == false) {
+            redirect(server_url('?erro=Pedido não encontrado'));
+        }
         include_once server_path('view/pedido/source.php');
     }
 
@@ -84,13 +84,19 @@ class ControllerPedido {
     }
 
     public static function salvar() {
+        validar::autorizar();
+        $pedi_fk_cliente = strip_tags($_POST['pedi_fk_cliente']);
+        $pedi_quantidade = strip_tags($_POST['pedi_quantidade']);
+        $pedi_total = strip_tags($_POST['pedi_total']);
+        $pedi_data = strip_tags($_POST['pedi_data']);
+        $pedi_status = "FECHADO";
         try {
             $pedido = new model\pedido\ModelPedido();
-            $pedido->pedi_fk_cliente = strip_tags($_POST['pedi_fk_cliente']);
-            $pedido->pedi_quantidade = strip_tags($_POST['pedi_quantidade']);
-            $pedido->pedi_total = strip_tags($_POST['pedi_total']);
-            $pedido->pedi_data = strip_tags($_POST['pedi_data']);
-            $pedido->pedi_status = "FECHADO";
+            $pedido->pedi_fk_cliente = $pedi_fk_cliente;
+            $pedido->pedi_quantidade = $pedi_quantidade;
+            $pedido->pedi_total = $pedi_total;
+            $pedido->pedi_data = $pedi_data;
+            $pedido->pedi_status = $pedi_status;
             DAOPedido::save($pedido);
             $id = DAOPedido::retornaUltiID();
         } catch (Exception $erro) {
@@ -110,7 +116,7 @@ class ControllerPedido {
         } catch (Exception $erro) {
             redirect(server_url('?erro=' . $erro->getMessage()));
         }
-        redirect(server_url('?sucesso=Pedido Excluido'));
         ControllerPedido::lista();
     }
+
 }

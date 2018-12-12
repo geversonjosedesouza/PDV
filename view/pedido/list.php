@@ -9,7 +9,7 @@
 <div class="col-lg-9">
     <a id="novaPedido" href="<?php echo server_url('?page=ControllerPedido&option=novo'); ?>" class="btn btn-default">
         <span class="glyphicon glyphicon-plus-sign"></span>
-        Nova Pedido
+        Novo Pedido
     </a>
     <br><br>
     <?php
@@ -37,10 +37,11 @@
             echo '<td>', $cada_pedido->pedi_data, '</td>';
             echo '<td>', $cada_pedido->pedi_status, '</td>';
             echo '<td>';
-            echo '<a href="', server_url('?page=ControllerPedido&option=visualizar'), '" class="btn btn-info">';
+            echo '<a href="', server_url('?page=ControllerPedido&option=visualizar&pedi_pk_id='. $cada_pedido->pedi_pk_id), '" class="btn btn-info">';
             echo '<span class="glyphicon glyphicon-search"></span>';
             echo '</a>';
             if ($cada_pedido->pedi_status == "CONFIRMADO") {
+                
             } else {
                 echo '<a href="', server_url('?page=ControllerPedido&option=edita&pedi_pk_id=' . $cada_pedido->pedi_pk_id), '" class="btn btn-warning">';
                 echo '<span class="glyphicon glyphicon-edit"></span>';
