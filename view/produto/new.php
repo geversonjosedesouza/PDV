@@ -7,19 +7,19 @@
 ?>
 <div class="col-lg-3"><?php menu(); ?></div>
 <div class="col-lg-6 jumbotron">
-    <form action="<?php echo server_url('?page=ControllerProduto&option=salvar'); ?>" method="post">
+    <form enctype="multipart/form-data" action="<?php echo server_url('?page=ControllerProduto&option=salvar'); ?>" method="post">
         <legend>Novo Produto</legend>
         <label>Nome:</label>
         <input type="text" name="prod_nome" placeholder="Digite o nome" class="form-control" required>
         <br>
         <label>Quantidade:</label>
-        <input type="text" name="prod_quantidade" placeholder="Digite a quantidade" class="form-control" required>
+        <input type="text"  id="quantidade" name="prod_quantidade" placeholder="Digite a quantidade" class="form-control" required>
         <br>
         <label>Imagem:</label>
-        <input type="file" name="prod_imagem" placeholder="Selecione a imagem" class="form-control">
+        <input type="file" name="prod_imagem" placeholder="Selecione a imagem" class="form-control" required>
         <br>
         <label>Valor:</label>
-        <input type="text" name="prod_valor" placeholder="Digite o valor" class="form-control" required>
+        <input type="text" id="moeda" name="prod_valor" placeholder="Digite o valor" class="form-control" required>
         <br>
         <button class="btn btn-block btn-lg btn-primary">CONFIRMAR</button><br>
     </form>

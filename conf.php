@@ -8,11 +8,11 @@
 
 ini_set('display_errors', 1);
 
-$GLOBALS['server_url'] = "http://" . $_SERVER['SERVER_NAME'] . "/PDV/";
+$GLOBALS['base_url'] = "http://" . $_SERVER['SERVER_NAME'] . "/PDV/";
 $GLOBALS['base_server'] = $_SERVER['DOCUMENT_ROOT'] . "/PDV/";
 
 function server_url($caminho = "") {
-    return $GLOBALS['server_url'] . $caminho;
+    return $GLOBALS['base_url'] . $caminho;
 }
 
 function server_path($caminho = "") {

@@ -39,20 +39,29 @@ class ControllerProduto {
 
     public static function atualizar() {
         validar::autorizar();
-        $prod_pk_id = strip_tags($_POST['prod_pk_id']);
-        $prod_nome = strip_tags($_POST['prod_nome']);
-        $prod_quantidade = strip_tags($_POST['prod_quantidade']);
-        $prod_imagem = strip_tags($_POST['prod_imagem']);
-        $prod_valor = strip_tags($_POST['prod_valor']);
         try {
-            if (!isset($prod_pk_id)) {
-                redirect(server_url('?erro=Produto não informado'));
+            $prod_pk_id = strip_tags($_POST['prod_pk_id']);
+            $prod_nome = strip_tags($_POST['prod_nome']);
+            $prod_quantidade = strip_tags($_POST['prod_quantidade']);
+            $uploaddir = server_path('upload/produto/');
+            $uploadfile = $uploaddir . basename($_FILES['prod_imagem']['name']);
+            $extensao = pathinfo($uploadfile, PATHINFO_EXTENSION);
+            if (strstr('.jpg;.jpeg;.gif;.png', $extensao)) {
+                if (move_uploaded_file($_FILES['prod_imagem']['tmp_name'], $uploadfile)) {
+                    $prod_imagem = $_FILES['prod_imagem']['name'];
+                    $prod_valor = strip_tags($_POST['prod_valor']);
+                    if (!isset($prod_pk_id)) {
+                        redirect(server_url('?erro=Produto não informado'));
+                    }
+                    $produto = new model\produto\ModelProduto($prod_nome, $prod_quantidade);
+                    $produto->prod_imagem = $prod_imagem;
+                    $produto->prod_valor = $prod_valor;
+                    DAOProduto::update($produto, $prod_pk_id);
+                }
+            } else {
+                echo '<script>alert("Formato de imagem não aceito!")</script>';
+                redirect("javascript:window.history.go(-1)");
             }
-            $produto = new model\produto\ModelProduto($prod_nome, $prod_quantidade);
-            $produto->prod_imagem = $prod_imagem;
-            $produto->prod_valor = $prod_valor;
-
-            DAOProduto::update($produto, $prod_pk_id);
         } catch (Exception $erro) {
             redirect(server_url("?erro=" . $erro->getMessage()));
         }
@@ -63,50 +72,27 @@ class ControllerProduto {
         include_once server_path('view/produto/new.php');
     }
 
-    public static function salvar_bk_upload() {
-        try {
-            $prod_nome = strip_tags($_POST['prod_nome']);
-            $prod_quantidade = strip_tags($_POST['prod_quantidade']);
-            $prod_imagem = $_FILES['prod_imagem'];
-            if (!empty($prod_imagem["name"])) {
-                // Verifica se o arquivo é uma imagem
-                if (!preg_match("/^image\/(pjpeg|jpeg|png|gif|bmp)$/", $prod_imagem["type"])) {
-                    $error[1] = "Isso não é uma imagem.";
-                }
-                // Se não houver nenhum erro
-                if (count($error) == 0) {
-                    // Pega extensão da imagem
-                    preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", $prod_imagem["name"], $ext);
-                    // Gera um nome único para a imagem
-                    $nome_imagem = md5(uniqid(time())) . "." . $ext[1];
-                    // Caminho de onde ficará a imagem
-                    $caminho_imagem = server_path("upload/" . $nome_imagem);
-
-                    // Faz o upload da imagem para seu respectivo caminho
-                    move_uploaded_file($prod_imagem["tmp_name"], $caminho_imagem);
-                }
-            }
-            $prod_valor = strip_tags($_POST['prod_valor']);
-            $produto = new model\produto\ModelProduto($prod_nome, $prod_quantidade);
-            $produto->prod_imagem = $prod_imagem;
-            $produto->prod_valor = $prod_valor;
-            DAOProduto::save($produto);
-        } catch (Exception $erro) {
-            redirect(server_url("?erro=" . $erro->getMessage()));
-        }
-        ControllerProduto::lista();
-    }
-
     public static function salvar() {
+        validar::autorizar();
         try {
             $prod_nome = strip_tags($_POST['prod_nome']);
             $prod_quantidade = strip_tags($_POST['prod_quantidade']);
-            $prod_imagem = strip_tags($_POST['prod_imagem']);
-            $prod_valor = strip_tags($_POST['prod_valor']);
-            $produto = new model\produto\ModelProduto($prod_nome, $prod_quantidade);
-            $produto->prod_imagem = $prod_imagem;
-            $produto->prod_valor = $prod_valor;
-            DAOProduto::save($produto);
+            $uploaddir = server_path('upload/produto/');
+            $uploadfile = $uploaddir . basename($_FILES['prod_imagem']['name']);
+            $extensao = pathinfo($uploadfile, PATHINFO_EXTENSION);
+            if (strstr('.jpg;.jpeg;.gif;.png', $extensao)) {
+                if (move_uploaded_file($_FILES['prod_imagem']['tmp_name'], $uploadfile)) {
+                    $prod_imagem = $_FILES['prod_imagem']['name'];
+                    $prod_valor = strip_tags($_POST['prod_valor']);
+                    $produto = new model\produto\ModelProduto($prod_nome, $prod_quantidade);
+                    $produto->prod_imagem = $prod_imagem;
+                    $produto->prod_valor = $prod_valor;
+                    DAOProduto::save($produto);
+                }
+            } else {
+                echo '<script>alert("Formato de imagem não aceito!")</script>';
+                redirect("javascript:window.history.go(-1)");
+            }
         } catch (Exception $erro) {
             redirect(server_url("?erro=" . $erro->getMessage()));
         }

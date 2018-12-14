@@ -32,7 +32,7 @@
             echo '<td>', $cada_produto->prod_pk_id, '</td>';
             echo '<td>', $cada_produto->prod_nome, '</td>';
             echo '<td>', $cada_produto->prod_quantidade, '</td>';
-            echo '<td>', $cada_produto->prod_imagem, '</td>';
+            echo '<td><img src="/PDV/upload/produto/', $cada_produto->prod_imagem, '" width="42" height="42"></td>';
             echo '<td>', $cada_produto->prod_valor, '</td>';
             echo '<td>';
             echo '<a href="', server_url('?page=ControllerProduto&option=edita&prod_pk_id=' . $cada_produto->prod_pk_id), '" class="btn btn-warning">';
