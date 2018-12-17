@@ -34,10 +34,11 @@
             echo '<td>', $cada_pedido->clie_nome, '</td>';
             echo '<td>', $cada_pedido->pedi_quantidade, '</td>';
             echo '<td>', $cada_pedido->pedi_total, '</td>';
-            echo '<td>', $cada_pedido->pedi_data, '</td>';
+            $data = new DateTime($cada_pedido->pedi_data);
+            echo '<td>', $data->format('d-m-Y'), '</td>';
             echo '<td>', $cada_pedido->pedi_status, '</td>';
             echo '<td>';
-            echo '<a href="', server_url('?page=ControllerPedido&option=visualizar&pedi_pk_id='. $cada_pedido->pedi_pk_id), '" class="btn btn-info">';
+            echo '<a data-toggle="modal" href="#excluir_pedido" class="btn btn-danger">';
             echo '<span class="glyphicon glyphicon-search"></span>';
             echo '</a>';
             if ($cada_pedido->pedi_status == "CONFIRMADO") {
@@ -67,7 +68,7 @@
 
             </div>
             <div class="modal-footer">
-                <a href="<?php echo server_url('?page=ControllerPedido&option=excluir'); ?>" class="btn btn-danger">Sim</a>
+                <a href="<?php echoserver_url('?page=ControllerPedido&option=visualizar&pedi_pk_id=' . $cada_pedido->pedi_pk_id); ?>" class="btn btn-danger">Sim</a>
                 <button class="btn btn-danger" data-dismiss="modal">Não</button>
             </div>
         </div>

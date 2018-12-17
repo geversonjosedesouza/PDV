@@ -47,6 +47,14 @@ class ControllerPedido {
             redirect(server_url('?erro=Pedido não informado'));
         }
         $pedido = DAOPedido::getPedido($numPedido);
+        $pedido_aberto = new model\pedido\ModelPedido();
+        $pedido_aberto->pedi_pk_id = $pedido->pedi_pk_id;
+        $pedido_aberto->pedi_fk_cliente = $pedido->pedi_fk_cliente;
+        $pedido_aberto->pedi_quantidade = $pedido->pedi_quantidade;
+        $pedido_aberto->pedi_total = $pedido->pedi_total;
+        $pedido_aberto->pedi_data = $pedido->pedi_data;
+        $pedido_aberto->pedi_status = "ABERTO";
+        DAOPedido::update($pedido_aberto, $pedido_aberto->pedi_pk_id);
         $itens = DAOItem::selectItens($numPedido);
         $produtos = DAOProduto::select();
         if ($pedido == false) {
@@ -58,17 +66,22 @@ class ControllerPedido {
     public static function atualizar() {
         validar::autorizar();
         $pedi_pk_id = strip_tags($_POST['pedi_pk_id']);
-        $pedi_nome = strip_tags($_POST['pedi_nome']);
-        $pedi_cpf = strip_tags($_POST['pedi_cpf']);
-        $pedi_endereco = strip_tags($_POST['pedi_endereco']);
-        $pedi_telefone = strip_tags($_POST['pedi_telefone']);
+        $pedi_fk_cliente = strip_tags($_POST['pedi_fk_cliente']);
+        $pedi_quantidade = strip_tags($_POST['pedi_quantidade']);
+        $pedi_total = strip_tags($_POST['pedi_total']);
+        $pedi_data = strip_tags($_POST['pedi_data']);
+        $pedi_status = strip_tags($_POST['pedi_data']);
         try {
             if (!isset($pedi_pk_id)) {
                 redirect(server_url('?erro=Pedido não informado'));
             }
-            $pedido = new model\pedido\ModelPedido($pedi_nome, $pedi_cpf);
-            $pedido->pedi_endereco = $pedi_endereco;
-            $pedido->pedi_telefone = $pedi_telefone;
+            $pedido = new model\pedido\ModelPedido();
+            $pedido->pedi_pk_id = $pedi_pk_id;
+            $pedido->pedi_fk_cliente = $pedi_fk_cliente;
+            $pedido->pedi_quantidade = $pedi_quantidade;
+            $pedido->pedi_total = $pedi_total;
+            $pedido->pedi_data = $pedi_data;
+            $pedido->pedi_status = "FECHADO";
 
             DAOPedido::update($pedido, $pedi_pk_id);
         } catch (Exception $erro) {
